@@ -1,4 +1,6 @@
+using System;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +47,11 @@ public class GameManager : MonoBehaviour
 
             GetNextFruit();
         });
+
+        MessageBroker.Default.Receive<InstNewObject>().Subscribe(_ =>
+        {
+            GetNextFruit(_.fruit, _.pos);
+        }).AddTo(this);
     }
 
     // Update is called once per frame
@@ -58,8 +65,17 @@ public class GameManager : MonoBehaviour
 
     public void GetNextFruit()
     {
-        int fIndex = Random.Range(0, maxIndex);
+        int fIndex = UnityEngine.Random.Range(0, maxIndex);
 
         nextFruit = Instantiate(fruits[fIndex], trStage);
+    }
+
+    public void GetNextFruit(FRUIT fruitIndex, Vector2 pos)
+    {
+        int fIndex = (int)fruitIndex;//.ConvertTo<Int32>();
+
+        nextFruit = Instantiate((fruits[++fIndex]), trStage);
+        nextFruit.transform.position = pos;
+        nextFruit.GetComponent<Rigidbody2D>().simulated = true;
     }
 }

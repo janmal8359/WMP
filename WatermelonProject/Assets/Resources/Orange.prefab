@@ -154,4 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+  fruit: 1
   rigid: {fileID: 7216921705252393574}
