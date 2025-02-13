@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &87154546915382692
+--- !u!1 &5810132001260368292
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,27 +8,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8198578135834621500}
-  - component: {fileID: 5024241445364224863}
-  - component: {fileID: 5777747905127757364}
-  - component: {fileID: 4124557491893136369}
-  - component: {fileID: 3197261775281110749}
-  - component: {fileID: -4144078695699622923}
+  - component: {fileID: 2298762726317621259}
+  - component: {fileID: 8074059648670875660}
+  - component: {fileID: 5754490589902228763}
+  - component: {fileID: 7276372513304950028}
+  - component: {fileID: 1437525379949564231}
+  - component: {fileID: 5312474247169421888}
   m_Layer: 7
-  m_Name: Kiwi
+  m_Name: Peach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &8198578135834621500
+--- !u!224 &2298762726317621259
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87154546915382692}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 5810132001260368292}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38,30 +38,30 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5024241445364224863
+--- !u!222 &8074059648670875660
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87154546915382692}
+  m_GameObject: {fileID: 5810132001260368292}
   m_CullTransparentMesh: 1
---- !u!114 &5777747905127757364
+--- !u!114 &5754490589902228763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87154546915382692}
+  m_GameObject: {fileID: 5810132001260368292}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21003917, g: 0.754717, b: 0.21155776, a: 1}
+  m_Color: {r: 1, g: 0.6745283, b: 0.8110689, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -78,13 +78,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!58 &4124557491893136369
+--- !u!58 &7276372513304950028
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87154546915382692}
+  m_GameObject: {fileID: 5810132001260368292}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -113,15 +113,15 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 35
---- !u!50 &3197261775281110749
+  m_Radius: 43
+--- !u!50 &1437525379949564231
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87154546915382692}
+  m_GameObject: {fileID: 5810132001260368292}
   m_BodyType: 0
   m_Simulated: 0
   m_UseFullKinematicContacts: 0
@@ -141,18 +141,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-4144078695699622923
+--- !u!114 &5312474247169421888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87154546915382692}
+  m_GameObject: {fileID: 5810132001260368292}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e34ab74c198e49c2ad1c5eb75dc3efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  fruit: 2
-  rigid: {fileID: 3197261775281110749}
+  fruit: 4
+  rigid: {fileID: 1437525379949564231}

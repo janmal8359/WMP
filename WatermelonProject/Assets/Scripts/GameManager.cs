@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public BoxCollider2D deadLine;
 
     public int maxIndex = 2;
+    public float lastPickTime = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
         // Set Button
         btnStart.OnClickAsObservable().Subscribe(_ => 
         {
+            lastPickTime = Time.realtimeSinceStartup;
             state = GAMESTATE.PLAYING;
             startPage.SetActive(false);
 
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour
     public void GetNextFruit(FRUIT fruitIndex, Vector2 pos)
     {
         int fIndex = (int)fruitIndex;//.ConvertTo<Int32>();
+        Debug.Log(fIndex);
 
         nextFruit = Instantiate((fruits[++fIndex]), trStage);
         nextFruit.transform.position = pos;

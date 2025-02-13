@@ -593,6 +593,10 @@ MonoBehaviour:
   - {fileID: 6250576903131681397, guid: f21148200a9484f14bfeb1ec2aefbe7d, type: 3}
   - {fileID: 7255807317997904714, guid: 4e5d0557382e247fdafbeea6125cb4b2, type: 3}
   - {fileID: 87154546915382692, guid: 99edbba069e0044a08c4378553106392, type: 3}
+  - {fileID: 2791937355359929540, guid: 8054fd22a5d3546ddbaf02329f9cccbb, type: 3}
+  - {fileID: 5810132001260368292, guid: 82fd5257939c54bbfb4dde4945b4dfa2, type: 3}
+  - {fileID: 3221565916827851077, guid: 24f5ad627c50b46659b422257465b90d, type: 3}
+  - {fileID: 6654033641719879832, guid: 556fcec2376a44befac7377d7c1749ca, type: 3}
   nextFruit: {fileID: 0}
   trFruitsPool: {fileID: 164673620}
   trStage: {fileID: 1511057084}
@@ -600,6 +604,7 @@ MonoBehaviour:
   btnStart: {fileID: 1125553844}
   deadLine: {fileID: 883878332}
   maxIndex: 3
+  lastPickTime: 0
 --- !u!4 &677413091
 Transform:
   m_ObjectHideFlags: 0
@@ -609,7 +614,7 @@ Transform:
   m_GameObject: {fileID: 677413089}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 208.76196, y: 416.87643, z: -4.4422307}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -628,7 +633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 677413090}
-  fruit: {fileID: 0}
+  clickCooltime: 0.8
 --- !u!1 &883878330
 GameObject:
   m_ObjectHideFlags: 0

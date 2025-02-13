@@ -4,7 +4,10 @@ public class PlayController : MonoBehaviour
 {
     public GameManager manager;
 
-    public GameObject fruit;
+    public float clickCooltime = 0f;
+
+
+    private GameObject fruit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,8 +27,11 @@ public class PlayController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            // 클릭 쿨타임
+            if (Time.realtimeSinceStartup < manager.lastPickTime + clickCooltime) return;
             if (fruit.GetComponent<FruitsStateManager>() == null) return;
 
+            manager.lastPickTime = Time.realtimeSinceStartup;
             FruitsStateManager fruitSM = fruit.GetComponent<FruitsStateManager>();
             fruitSM.state = FRUITSTATE.DROP;
             fruitSM.rigid.simulated = true;
