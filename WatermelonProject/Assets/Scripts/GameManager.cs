@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,12 +22,24 @@ public class GameManager : MonoBehaviour
     public Transform trStage;
     public GameObject startPage;
     public Button btnStart;
+    public TextMeshProUGUI txtScore;
 
 
     public BoxCollider2D deadLine;
 
     public int maxIndex = 2;
     public float lastPickTime = 0f;
+
+    private int totalScore = 0;
+
+    public int SCORE {
+            get {return totalScore;} 
+            set 
+            {
+                totalScore = value;
+                txtScore.text = totalScore.ToString();
+            }
+        }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +48,7 @@ public class GameManager : MonoBehaviour
         {
             if (fruits[i] == null)
             {
-                Debug.LogWarning("Fruits is not suitable");
+                //Debug.LogWarning("Fruits is not suitable");
                 return;
             }
         }
@@ -54,6 +67,8 @@ public class GameManager : MonoBehaviour
         {
             GetNextFruit(_.fruit, _.pos);
         }).AddTo(this);
+
+        
     }
 
     // Update is called once per frame
@@ -75,6 +90,7 @@ public class GameManager : MonoBehaviour
     public void GetNextFruit(FRUIT fruitIndex, Vector2 pos)
     {
         int fIndex = (int)fruitIndex;//.ConvertTo<Int32>();
+        SCORE += (fIndex + 1) * 100;
         Debug.Log(fIndex);
 
         nextFruit = Instantiate((fruits[++fIndex]), trStage);

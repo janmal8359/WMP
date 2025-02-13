@@ -36,13 +36,11 @@ public class FruitsStateManager : MonoBehaviour
         var col = collision.gameObject.GetComponent<FruitsStateManager>();
         if (col == null) return;
 
-        // 두 개의 오브젝트가 충돌해서 하위 행동이 2번 일어나서 계속 합쳐지는 현상이 있어서
-        // 어떻게 한 번만 작동되게 할것인지 고려가 필요함.
-
         if (col.fruit == this.fruit)
         {
             // 둘 중 더 아래에 있는 과일 기준으로 작동(둘 중 하나만 작동되도록 하는 문제도 해결)
             if (col.transform.position.y > this.transform.position.y) return;
+            else if (col.transform.position.y == this.transform.position.y && col.transform.position.x > this.transform.position.x) return;
             if (this.fruit == FRUIT.WATERMELON) return;
 
             //Debug.Log("Crash Same Fruit");
