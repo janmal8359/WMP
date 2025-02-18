@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -141,17 +140,5 @@ public class GameManager : MonoBehaviour
         nextFruit.transform.position = pos;
         nextFruit.GetComponent<Rigidbody2D>().simulated = true;
         tmpList.Add(nextFruit);
-    }
-    
-    public void SaveRankDataToJson(RankRecord record)
-    {
-        string saveData = JsonUtility.ToJson(record);
-        File.WriteAllText(SAVEPATH, saveData);
-    }
-
-    public RankRecord LoadRankDataFromJson()
-    {
-        string loadData = File.ReadAllText(SAVEPATH);
-        return JsonUtility.FromJson<RankRecord>(loadData);
     }
 }

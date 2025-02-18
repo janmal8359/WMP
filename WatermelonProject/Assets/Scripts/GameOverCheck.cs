@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class GameOverCheck : MonoBehaviour
 {
     GameManager gManager;
+    DataManager dManager;
 
     public TextMeshProUGUI txtCount;
     public GameObject uiRank;
@@ -25,9 +26,10 @@ public class GameOverCheck : MonoBehaviour
     void Start()
     {
         gManager = GameManager.Instance;
+        dManager = DataManager.Instance;
 
         if (btnConfirm == null) return;
-        btnConfirm.OnClickAsObservable().Subscribe(_ => {
+            btnConfirm.OnClickAsObservable().Subscribe(_ => {
 
             isCheck = false;
             gManager.SCORE = 0;
@@ -48,19 +50,14 @@ public class GameOverCheck : MonoBehaviour
 
         if (Time.realtimeSinceStartup > colTime + waitTime + checkTime)
         {
-        RankRecord record = new RankRecord();
-        record.score = gManager.SCORE;
-        record.playerName = "guest";
+            // Save Record To Json
+            RankData data = new RankData();
+            data.score = gManager.SCORE;
+            data.playerName = "guest";
 
-        gManager.SaveRankDataToJson(record);
+            dManager.SaveDataToJson(data);
         
             ShowResult();
-            //isCheck = false;
-            //gManager.SCORE = 0;
-            //gManager.trStage.gameObject.SetActive(false);
-            //gManager.state = GAMESTATE.END;
-            //gManager.startPage.SetActive(true);
-            //gManager.count.SetActive(false);
         }
 
     }
@@ -70,15 +67,6 @@ public class GameOverCheck : MonoBehaviour
         // Show Result Popup
         if (uiRank != null)
             uiRank.SetActive(true);
-
-        // Save Record To Json
-        RankRecord record = new RankRecord();
-        record.score = gManager.SCORE;
-        record.playerName = "guest";
-
-        gManager.SaveRankDataToJson(record);
-        //string saveData = JsonUtility.ToJson(record);
-        //File.WriteAllText(gManager.SAVEPATH, saveData);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
