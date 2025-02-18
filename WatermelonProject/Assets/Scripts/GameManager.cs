@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UniRx;
 using Unity.VisualScripting;
@@ -9,20 +11,27 @@ public enum GAMESTATE
 {
     IDLE,
     PLAYING,
+    WAIT,   // 게임 오버 체크 확인
     END
 }
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton
+    public static GameManager Instance {get; private set;}
+
     public GAMESTATE state = GAMESTATE.IDLE;
 
     public GameObject[] fruits;
     public GameObject nextFruit;
-    public Transform trFruitsPool;
+    public Transform trFruits;
+    [HideInInspector]
+    public Queue<GameObject> fruitsPool = new Queue<GameObject>();
     public Transform trStage;
     public GameObject startPage;
     public Button btnStart;
     public TextMeshProUGUI txtScore;
+    public GameObject count;
 
 
     public BoxCollider2D deadLine;
@@ -32,6 +41,8 @@ public class GameManager : MonoBehaviour
 
     private int totalScore = 0;
 
+    private List<GameObject> tmpList = new List<GameObject>();
+
     public int SCORE {
             get {return totalScore;} 
             set 
@@ -40,6 +51,23 @@ public class GameManager : MonoBehaviour
                 txtScore.text = totalScore.ToString();
             }
         }
+
+    public string SAVEPATH {
+        get {return Application.persistentDataPath + "/RankData.json";}
+        private set{}
+    }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        
+        Instance = this;
+
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,13 +80,24 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+        Debug.Log(Application.persistentDataPath);
 
         // Set Button
         btnStart.OnClickAsObservable().Subscribe(_ => 
         {
+
+            if (tmpList.Count > 0)
+            {
+                foreach(GameObject child in tmpList)
+                    Destroy(child);
+            }
+
             lastPickTime = Time.realtimeSinceStartup;
             state = GAMESTATE.PLAYING;
+            trStage.gameObject.SetActive(true);
             startPage.SetActive(false);
+            count.SetActive(false);
+
 
             GetNextFruit();
         });
@@ -84,7 +123,12 @@ public class GameManager : MonoBehaviour
     {
         int fIndex = UnityEngine.Random.Range(0, maxIndex);
 
+        //if (fruitsPool.Count > 0)
+        //{
+        //    nextFruit = fruitsPool.Dequeue();
+        //}
         nextFruit = Instantiate(fruits[fIndex], trStage);
+        tmpList.Add(nextFruit);
     }
 
     public void GetNextFruit(FRUIT fruitIndex, Vector2 pos)
@@ -96,5 +140,18 @@ public class GameManager : MonoBehaviour
         nextFruit = Instantiate((fruits[++fIndex]), trStage);
         nextFruit.transform.position = pos;
         nextFruit.GetComponent<Rigidbody2D>().simulated = true;
+        tmpList.Add(nextFruit);
+    }
+    
+    public void SaveRankDataToJson(RankRecord record)
+    {
+        string saveData = JsonUtility.ToJson(record);
+        File.WriteAllText(SAVEPATH, saveData);
+    }
+
+    public RankRecord LoadRankDataFromJson()
+    {
+        string loadData = File.ReadAllText(SAVEPATH);
+        return JsonUtility.FromJson<RankRecord>(loadData);
     }
 }

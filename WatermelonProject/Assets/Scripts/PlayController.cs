@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayController : MonoBehaviour
 {
-    public GameManager manager;
+    GameManager manager;
 
     public float clickCooltime = 0f;
 
@@ -12,6 +12,7 @@ public class PlayController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        manager = GameManager.Instance;
         if (manager == null) return;
 
         fruit = manager.nextFruit;
@@ -20,10 +21,11 @@ public class PlayController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (manager.state != GAMESTATE.PLAYING) return;
+        if (fruit != null) 
+            fruit.transform.position = new Vector2(Input.mousePosition.x, fruit.transform.position.y);
 
+        if (manager.state != GAMESTATE.PLAYING || manager.startPage.activeSelf) return;
         if (fruit == null) fruit = manager.nextFruit;
-        fruit.transform.position = new Vector2(Input.mousePosition.x, fruit.transform.position.y);
 
         if (Input.GetMouseButtonUp(0))
         {
