@@ -138,4 +138,9 @@ public class GameManager : MonoBehaviour
         nextFruit.GetComponent<Rigidbody2D>().simulated = true;
         tmpList.Add(nextFruit);
     }
+
+    public void SetRankingData()
+    {
+        
+    }
 }
