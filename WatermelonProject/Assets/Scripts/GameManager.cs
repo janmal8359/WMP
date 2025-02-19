@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public Transform trStage;
     public GameObject startPage;
     public Button btnStart;
+    public GameObject uiRanking;
+    public Button btnRank;
     public TextMeshProUGUI txtScore;
     public GameObject count;
 
@@ -79,7 +81,6 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-        Debug.Log(Application.persistentDataPath);
 
         // Set Button
         btnStart.OnClickAsObservable().Subscribe(_ => 
@@ -101,21 +102,17 @@ public class GameManager : MonoBehaviour
             GetNextFruit();
         });
 
+        btnRank.OnClickAsObservable().Subscribe(_ =>
+        {
+            uiRanking.SetActive(true);
+        }).AddTo(this);
+
         MessageBroker.Default.Receive<InstNewObject>().Subscribe(_ =>
         {
             GetNextFruit(_.fruit, _.pos);
         }).AddTo(this);
 
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (state == GAMESTATE.PLAYING)
-        {
-            // Dead 판정
-        }
     }
 
     public void GetNextFruit()

@@ -31,7 +31,6 @@ public class GameOverCheck : MonoBehaviour
         if (btnConfirm == null) return;
             btnConfirm.OnClickAsObservable().Subscribe(_ => {
 
-            isCheck = false;
             gManager.SCORE = 0;
             gManager.trStage.gameObject.SetActive(false);
             gManager.state = GAMESTATE.END;
@@ -58,6 +57,7 @@ public class GameOverCheck : MonoBehaviour
             dManager.SaveDataToJson(data);
         
             ShowResult();
+            isCheck = false;
         }
 
     }
@@ -71,7 +71,6 @@ public class GameOverCheck : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Enter");
         colTime = Time.realtimeSinceStartup;
         gManager.state = GAMESTATE.WAIT;
     }
@@ -87,7 +86,6 @@ public class GameOverCheck : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.LogError("Exit");
         gManager.state = GAMESTATE.PLAYING;
         gManager.count.SetActive(false);
         isCheck = false;
