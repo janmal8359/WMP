@@ -15,6 +15,9 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance {get; private set;}
 
     public RankData rankData;
+    public RankDataCell rankCell;
+    public Transform trRank;
+    public ContentsAutoCell autoCell;
 
     private string path;
 
@@ -52,7 +55,7 @@ public class DataManager : MonoBehaviour
 
             StringBuilder sb = new StringBuilder(loadJsonData);
 
-            sb.Append(",\n");
+            sb.Append("/\n");
             sb.Append(newJsonData);
             jsonData = sb.ToString();
         
@@ -87,5 +90,29 @@ public class DataManager : MonoBehaviour
         }
 
         return datas;
+    }
+    
+    public void SetRank()
+    {
+        if (autoCell.scv.content.childCount > 0)
+        {
+            foreach (Transform item in autoCell.scv.content)
+            {
+                Destroy(item.gameObject);
+            }
+        }
+
+        CreateRankCell(DeserializedJsonData(File.ReadAllText(path)));
+        autoCell.AutoCelling();
+    }
+
+    void CreateRankCell(List<RankData> datas)
+    {
+        foreach (var data in datas)
+        {
+            var cell = Instantiate(rankCell, trRank);
+            cell.txtName.text = data.playerName;
+            cell.txtScore.text = data.score.ToString();
+        }
     }
 }

@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 {
     // Singleton
     public static GameManager Instance {get; private set;}
+    DataManager dataManager;
 
     public GAMESTATE state = GAMESTATE.IDLE;
 
@@ -31,8 +32,10 @@ public class GameManager : MonoBehaviour
     public Button btnStart;
     public GameObject uiRanking;
     public Button btnRank;
+    public Button btnRankClose;
+    public GameObject uiScore;
     public TextMeshProUGUI txtScore;
-    public GameObject count;
+    public GameObject uiCountDown;
 
 
     public BoxCollider2D deadLine;
@@ -73,6 +76,9 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        dataManager = DataManager.Instance;
+        if (dataManager == null) return;
+
         for (int i = 0; i < fruits.Length - 1; i++)
         {
             if (fruits[i] == null)
@@ -96,8 +102,8 @@ public class GameManager : MonoBehaviour
             state = GAMESTATE.PLAYING;
             trStage.gameObject.SetActive(true);
             startPage.SetActive(false);
-            count.SetActive(false);
-
+            uiCountDown.SetActive(false);
+            uiScore.SetActive(true);
 
             GetNextFruit();
         });
@@ -105,6 +111,12 @@ public class GameManager : MonoBehaviour
         btnRank.OnClickAsObservable().Subscribe(_ =>
         {
             uiRanking.SetActive(true);
+            dataManager.SetRank();
+        }).AddTo(this);
+        
+        btnRankClose.OnClickAsObservable().Subscribe(_ =>
+        {
+            uiRanking.SetActive(false);
         }).AddTo(this);
 
         MessageBroker.Default.Receive<InstNewObject>().Subscribe(_ =>
@@ -139,8 +151,4 @@ public class GameManager : MonoBehaviour
         tmpList.Add(nextFruit);
     }
 
-    public void SetRankingData()
-    {
-        
-    }
 }

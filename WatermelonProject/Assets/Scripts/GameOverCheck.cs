@@ -12,8 +12,9 @@ public class GameOverCheck : MonoBehaviour
     DataManager dManager;
 
     public TextMeshProUGUI txtCount;
-    public GameObject uiRank;
+    public GameObject uiResult;
     public Button btnConfirm;
+    public TextMeshProUGUI txtScore;
 
     public float waitTime = 2f;
     public float checkTime = 4f;
@@ -21,7 +22,6 @@ public class GameOverCheck : MonoBehaviour
 
     private float colTime = 0f;
     private bool isCheck = false;
-    private bool isConfirm = false;
 
     void Start()
     {
@@ -29,26 +29,30 @@ public class GameOverCheck : MonoBehaviour
         dManager = DataManager.Instance;
 
         if (btnConfirm == null) return;
-            btnConfirm.OnClickAsObservable().Subscribe(_ => {
 
+        btnConfirm.OnClickAsObservable().Subscribe(_ => {
             gManager.SCORE = 0;
             gManager.trStage.gameObject.SetActive(false);
-            gManager.state = GAMESTATE.END;
             gManager.startPage.SetActive(true);
-            gManager.count.SetActive(false);
+            uiResult.SetActive(false);
         });
     }
 
     void FixedUpdate()
     {
-        if (!isCheck) return;
+        if (!isCheck || gManager.state != GAMESTATE.WAIT) return;
 
-        gManager.count.SetActive(true);
+        gManager.uiCountDown.SetActive(true);
         int time = (int)((colTime + waitTime + checkTime) - Time.realtimeSinceStartup);
         txtCount.text = time.ToString();
 
-        if (Time.realtimeSinceStartup > colTime + waitTime + checkTime)
+        if (Time.realtimeSinceStartup > colTime + waitTime + checkTime && gManager.state == GAMESTATE.WAIT)
         {
+            isCheck = false;
+            gManager.state = GAMESTATE.END;
+            gManager.uiCountDown.SetActive(false);
+            gManager.uiScore.SetActive(false);
+
             // Save Record To Json
             RankData data = new RankData();
             data.score = gManager.SCORE;
@@ -57,7 +61,6 @@ public class GameOverCheck : MonoBehaviour
             dManager.SaveDataToJson(data);
         
             ShowResult();
-            isCheck = false;
         }
 
     }
@@ -65,8 +68,9 @@ public class GameOverCheck : MonoBehaviour
     void ShowResult()
     {
         // Show Result Popup
-        if (uiRank != null)
-            uiRank.SetActive(true);
+        if (uiResult != null)
+            uiResult.SetActive(true);
+            txtScore.text = gManager.SCORE.ToString();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -87,7 +91,7 @@ public class GameOverCheck : MonoBehaviour
     void OnTriggerExit2D(Collider2D collision)
     {
         gManager.state = GAMESTATE.PLAYING;
-        gManager.count.SetActive(false);
+        gManager.uiCountDown.SetActive(false);
         isCheck = false;
     }
 
