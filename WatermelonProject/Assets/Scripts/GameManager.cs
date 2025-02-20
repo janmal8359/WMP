@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
         // Set Button
         btnStart.OnClickAsObservable().Subscribe(_ => 
         {
-
+            // Transform 하위 오브젝트 파괴하는 쪽으로 수정
             if (tmpList.Count > 0)
             {
                 foreach(GameObject child in tmpList)

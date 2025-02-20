@@ -114,11 +114,34 @@ public class DataManager : MonoBehaviour
 
     void CreateRankCell(List<RankData> datas)
     {
+        datas.Sort(CompareDatasByScore);
+
         foreach (var data in datas)
         {
             var cell = Instantiate(rankCell, trRank);
             cell.txtName.text = data.playerName;
             cell.txtScore.text = data.score.ToString();
+        }
+    }
+
+    // Sort Datas by Score;
+    private static int CompareDatasByScore(RankData x, RankData y)
+    {
+        if (x == null)
+        {
+            if (y == null) return 0;
+
+            else return -1;
+        }
+
+        else
+        {
+            if (y == null) return 1;
+
+            int val = y.score.CompareTo(x.score);
+
+            if (val != 0) return val;
+            else return 0;
         }
     }
 }
