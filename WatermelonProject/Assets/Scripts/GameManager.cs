@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
         
         btnRankClose.OnClickAsObservable().Subscribe(_ =>
         {
+            dataManager.ResetRank();
             uiRanking.SetActive(false);
         }).AddTo(this);
 

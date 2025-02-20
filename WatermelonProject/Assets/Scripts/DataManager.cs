@@ -92,7 +92,7 @@ public class DataManager : MonoBehaviour
         return datas;
     }
     
-    public void SetRank()
+    public void ResetRank()
     {
         if (autoCell.scv.content.childCount > 0)
         {
@@ -101,6 +101,12 @@ public class DataManager : MonoBehaviour
                 Destroy(item.gameObject);
             }
         }
+
+    }
+
+    public void SetRank()
+    {
+        ResetRank();
 
         CreateRankCell(DeserializedJsonData(File.ReadAllText(path)));
         autoCell.AutoCelling();
