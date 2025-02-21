@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,12 +22,8 @@ public class GameManager : MonoBehaviour
     DataManager dataManager;
 
     public GAMESTATE state = GAMESTATE.IDLE;
-
-    public GameObject[] fruits;
-    public GameObject nextFruit;
+    public GameObject fruit;
     public Transform trFruits;
-    [HideInInspector]
-    public Queue<GameObject> fruitsPool = new Queue<GameObject>();
     public Transform trStage;
     public GameObject startPage;
     public Button btnStart;
@@ -36,16 +33,14 @@ public class GameManager : MonoBehaviour
     public GameObject uiScore;
     public TextMeshProUGUI txtScore;
     public GameObject uiCountDown;
-
-
     public BoxCollider2D deadLine;
 
-    public int maxIndex = 2;
+
     public float lastPickTime = 0f;
+
 
     private int totalScore = 0;
 
-    private List<GameObject> tmpList = new List<GameObject>();
 
     public int SCORE {
             get {return totalScore;} 
@@ -57,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
 
     public string SAVEPATH {
-        get {return Application.persistentDataPath + "/RankData.json";}
+        get {return Application.dataPath + "/RankData.json";}
         private set{}
     }
 
@@ -79,25 +74,9 @@ public class GameManager : MonoBehaviour
         dataManager = DataManager.Instance;
         if (dataManager == null) return;
 
-        for (int i = 0; i < fruits.Length - 1; i++)
-        {
-            if (fruits[i] == null)
-            {
-                //Debug.LogWarning("Fruits is not suitable");
-                return;
-            }
-        }
-
         // Set Button
         btnStart.OnClickAsObservable().Subscribe(_ => 
         {
-            // Transform 하위 오브젝트 파괴하는 쪽으로 수정
-            if (tmpList.Count > 0)
-            {
-                foreach(GameObject child in tmpList)
-                    Destroy(child);
-            }
-
             lastPickTime = Time.realtimeSinceStartup;
             state = GAMESTATE.PLAYING;
             trStage.gameObject.SetActive(true);
@@ -105,7 +84,7 @@ public class GameManager : MonoBehaviour
             uiCountDown.SetActive(false);
             uiScore.SetActive(true);
 
-            GetNextFruit();
+            GetFruit();
         });
 
         btnRank.OnClickAsObservable().Subscribe(_ =>
@@ -128,28 +107,25 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void GetNextFruit()
+    public GameObject GetFruit()
     {
-        int fIndex = UnityEngine.Random.Range(0, maxIndex);
+        fruit = Instantiate(fruit, trStage);
+        fruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
 
-        //if (fruitsPool.Count > 0)
-        //{
-        //    nextFruit = fruitsPool.Dequeue();
-        //}
-        nextFruit = Instantiate(fruits[fIndex], trStage);
-        tmpList.Add(nextFruit);
+        return fruit;
     }
 
-    public void GetNextFruit(FRUIT fruitIndex, Vector2 pos)
+    public GameObject GetNextFruit(FRUIT fruitIndex, Vector2 pos)
     {
         int fIndex = (int)fruitIndex;//.ConvertTo<Int32>();
         SCORE += (fIndex + 1) * 100;
-        Debug.Log(fIndex);
 
-        nextFruit = Instantiate((fruits[++fIndex]), trStage);
+        GameObject nextFruit = Instantiate((fruit), trStage);
         nextFruit.transform.position = pos;
+        nextFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo(fruitIndex);
         nextFruit.GetComponent<Rigidbody2D>().simulated = true;
-        tmpList.Add(nextFruit);
+
+        return nextFruit;
     }
 
 }

@@ -1,4 +1,6 @@
+using System;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum FRUITSTATE
@@ -23,17 +25,37 @@ public class FruitsStateManager : MonoBehaviour
     public FRUITSTATE state = FRUITSTATE.IDLE;
     public FRUIT fruit = FRUIT.APPLE;
 
+    public GameObject[] fruits;
     public Rigidbody2D rigid;
-
     private GameManager gManager;
 
     void Start()
     {
-        if (rigid == null)
-            rigid = GetComponent<Rigidbody2D>();
-
         gManager = GameManager.Instance;
         if (gManager == null) return;
+
+        //Init().SetFruitInfo(fruit);
+    }
+
+    public FruitsStateManager Init()
+    {
+        state = FRUITSTATE.IDLE;
+        if (rigid != null) rigid.simulated = false;
+
+        return this;
+    }
+
+    public void SetFruitInfo(FRUIT varFruit)
+    {
+        this.fruit = varFruit;
+        int fIndex = (int)fruit;
+        rigid = fruits[fIndex].GetComponent<Rigidbody2D>();
+
+        for (int i = 0; i < fruits.Length - 1; i++)
+        {
+            if (i == fIndex) fruits[i].SetActive(true);
+            else fruits[i].SetActive(false);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

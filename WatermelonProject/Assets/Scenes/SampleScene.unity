@@ -1239,15 +1239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  fruits:
-  - {fileID: 6250576903131681397, guid: f21148200a9484f14bfeb1ec2aefbe7d, type: 3}
-  - {fileID: 7255807317997904714, guid: 4e5d0557382e247fdafbeea6125cb4b2, type: 3}
-  - {fileID: 87154546915382692, guid: 99edbba069e0044a08c4378553106392, type: 3}
-  - {fileID: 2791937355359929540, guid: 8054fd22a5d3546ddbaf02329f9cccbb, type: 3}
-  - {fileID: 5810132001260368292, guid: 82fd5257939c54bbfb4dde4945b4dfa2, type: 3}
-  - {fileID: 3221565916827851077, guid: 24f5ad627c50b46659b422257465b90d, type: 3}
-  - {fileID: 6654033641719879832, guid: 556fcec2376a44befac7377d7c1749ca, type: 3}
-  nextFruit: {fileID: 0}
+  fruit: {fileID: 7686344322134549309, guid: 5666b13c75dc3414daeb5f2b12ae3403, type: 3}
   trFruits: {fileID: 164673620}
   trStage: {fileID: 1511057084}
   startPage: {fileID: 567839719}
@@ -1259,7 +1251,6 @@ MonoBehaviour:
   txtScore: {fileID: 1713679597}
   uiCountDown: {fileID: 2037362054}
   deadLine: {fileID: 883878332}
-  maxIndex: 3
   lastPickTime: 0
 --- !u!4 &677413091
 Transform:

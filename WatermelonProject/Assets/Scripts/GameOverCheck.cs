@@ -35,6 +35,11 @@ public class GameOverCheck : MonoBehaviour
             gManager.trStage.gameObject.SetActive(false);
             gManager.startPage.SetActive(true);
             uiResult.SetActive(false);
+
+            foreach (Transform child in gManager.trStage)
+            {
+                Destroy(child);
+            }
         });
     }
 
