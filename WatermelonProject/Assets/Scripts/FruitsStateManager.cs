@@ -49,13 +49,15 @@ public class FruitsStateManager : MonoBehaviour
     {
         this.fruit = varFruit;
         int fIndex = (int)fruit;
-        rigid = fruits[fIndex].GetComponent<Rigidbody2D>();
+        //rigid = fruits[fIndex].GetComponent<Rigidbody2D>();
 
         for (int i = 0; i < fruits.Length - 1; i++)
         {
             if (i == fIndex) fruits[i].SetActive(true);
             else fruits[i].SetActive(false);
         }
+        
+        rigid = GetComponentInChildren<Rigidbody2D>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
