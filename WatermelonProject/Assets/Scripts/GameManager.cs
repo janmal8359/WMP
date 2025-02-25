@@ -83,8 +83,6 @@ public class GameManager : MonoBehaviour
             startPage.SetActive(false);
             uiCountDown.SetActive(false);
             uiScore.SetActive(true);
-
-            GetFruit();
         });
 
         btnRank.OnClickAsObservable().Subscribe(_ =>
@@ -109,10 +107,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject GetFruit()
     {
-        fruit = Instantiate(fruit, trStage);
-        fruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
+        GameObject newfruit = Instantiate(fruit, trStage);
+        newfruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
 
-        return fruit;
+        return newfruit;
     }
 
     public GameObject GetNextFruit(FRUIT fruitIndex, Vector2 pos)
@@ -123,7 +121,7 @@ public class GameManager : MonoBehaviour
         GameObject nextFruit = Instantiate((fruit), trStage);
         nextFruit.transform.position = pos;
         nextFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo(fruitIndex);
-        nextFruit.GetComponent<Rigidbody2D>().simulated = true;
+        nextFruit.GetComponentInChildren<Rigidbody2D>().simulated = true;
 
         return nextFruit;
     }

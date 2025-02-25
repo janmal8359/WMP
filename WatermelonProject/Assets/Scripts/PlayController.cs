@@ -1,4 +1,6 @@
+using Unity.Collections;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayController : MonoBehaviour
@@ -6,7 +8,7 @@ public class PlayController : MonoBehaviour
     GameManager manager;
 
     public float clickCooltime = 0f;
-
+    public NativeHashMap<int, FRUIT> fruitNum = new NativeHashMap<int, FRUIT>();
 
     private GameObject fruit;
 
@@ -16,7 +18,7 @@ public class PlayController : MonoBehaviour
         manager = GameManager.Instance;
         if (manager == null) return;
 
-        fruit = manager.fruit;
+        fruit = manager.GetFruit();
     }
 
     // Update is called once per frame
@@ -26,7 +28,7 @@ public class PlayController : MonoBehaviour
             fruit.transform.position = new Vector2(Input.mousePosition.x, fruit.transform.position.y);
 
         if (manager.state != GAMESTATE.PLAYING || manager.startPage.activeSelf) return;
-        if (fruit == null) fruit = manager.fruit;
+        if (fruit == null) fruit = manager.GetFruit();
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -35,12 +37,17 @@ public class PlayController : MonoBehaviour
             if (fruit.GetComponent<FruitsStateManager>() == null) return;
 
             manager.lastPickTime = Time.realtimeSinceStartup;
+            if (fruit == null) Debug.LogError("Not Exist Fruit");
             FruitsStateManager fruitSM = fruit.GetComponent<FruitsStateManager>();
+            if (fruitSM == null)
+            {
+                Debug.LogError("Not Exist FSM");
+            }
             fruitSM.state = FRUITSTATE.DROP;
             fruitSM.rigid.simulated = true;
 
             fruit = manager.GetFruit();
-            FRUIT fIndex = UnityEngine.Random.Range(0, 2).ConvertTo<FRUIT>();
+            FRUIT fIndex = (FRUIT)UnityEngine.Random.Range(0, 2);
             fruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo(fIndex);
         }
     }
