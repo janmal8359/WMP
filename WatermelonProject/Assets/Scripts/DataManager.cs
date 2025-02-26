@@ -58,8 +58,6 @@ public class DataManager : MonoBehaviour
             sb.Append("/\n");
             sb.Append(newJsonData);
             jsonData = sb.ToString();
-        
-            Debug.LogWarning(loadJsonData + "\n" + newJsonData + "\n" + jsonData);
         }
 
         else

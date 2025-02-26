@@ -33,8 +33,6 @@ public class FruitsStateManager : MonoBehaviour
     {
         gManager = GameManager.Instance;
         if (gManager == null) return;
-
-        //Init().SetFruitInfo(fruit);
     }
 
     public FruitsStateManager Init()
@@ -49,7 +47,6 @@ public class FruitsStateManager : MonoBehaviour
     {
         this.fruit = varFruit;
         int fIndex = (int)fruit;
-        //rigid = fruits[fIndex].GetComponent<Rigidbody2D>();
 
         for (int i = 0; i < fruits.Length - 1; i++)
         {

@@ -116,11 +116,11 @@ public class GameManager : MonoBehaviour
     public GameObject GetNextFruit(FRUIT fruitIndex, Vector2 pos)
     {
         int fIndex = (int)fruitIndex;//.ConvertTo<Int32>();
-        SCORE += (fIndex + 1) * 100;
+        SCORE += ++fIndex * 100;
 
-        GameObject nextFruit = Instantiate((fruit), trStage);
+        GameObject nextFruit = Instantiate(fruit, trStage);
         nextFruit.transform.position = pos;
-        nextFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo(fruitIndex);
+        nextFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)fIndex);
         nextFruit.GetComponentInChildren<Rigidbody2D>().simulated = true;
 
         return nextFruit;

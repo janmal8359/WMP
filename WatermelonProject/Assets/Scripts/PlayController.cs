@@ -17,8 +17,6 @@ public class PlayController : MonoBehaviour
     {
         manager = GameManager.Instance;
         if (manager == null) return;
-
-        fruit = manager.GetFruit();
     }
 
     // Update is called once per frame
@@ -37,12 +35,8 @@ public class PlayController : MonoBehaviour
             if (fruit.GetComponent<FruitsStateManager>() == null) return;
 
             manager.lastPickTime = Time.realtimeSinceStartup;
-            if (fruit == null) Debug.LogError("Not Exist Fruit");
+            
             FruitsStateManager fruitSM = fruit.GetComponent<FruitsStateManager>();
-            if (fruitSM == null)
-            {
-                Debug.LogError("Not Exist FSM");
-            }
             fruitSM.state = FRUITSTATE.DROP;
             fruitSM.rigid.simulated = true;
 

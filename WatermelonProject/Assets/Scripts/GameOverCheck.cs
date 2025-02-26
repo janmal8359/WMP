@@ -38,7 +38,7 @@ public class GameOverCheck : MonoBehaviour
 
             foreach (Transform child in gManager.trStage)
             {
-                Destroy(child);
+                Destroy(child.gameObject);
             }
         });
     }
