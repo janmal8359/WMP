@@ -19,7 +19,7 @@ public class GameOverCheck : MonoBehaviour
     public float waitTime = 2f;
     public float checkTime = 4f;
 
-
+    //
     private float colTime = 0f;
     private bool isCheck = false;
 

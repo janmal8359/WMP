@@ -10,7 +10,8 @@ public class ContentsAutoCell : MonoBehaviour
 
     public void AutoSizeExpand()
     {
-        scv.content.sizeDelta = new Vector2(scv.content.rect.width, scv.content.childCount * (scv.content.GetChild(0).GetComponent<RectTransform>().rect.height + spacing));
+        scv.content.GetChild(0).TryGetComponent<RectTransform>(out RectTransform rt);
+        scv.content.sizeDelta = new Vector2(scv.content.rect.width, scv.content.childCount * (rt.rect.height + spacing));
     }
 
     [ContextMenu("ReCelling")]
@@ -19,7 +20,7 @@ public class ContentsAutoCell : MonoBehaviour
         if (scv == null) return;
         
         AutoSizeExpand();
-        RectTransform scvRect = scv.GetComponent<RectTransform>();
+        scv.TryGetComponent<RectTransform>(out RectTransform scvRect);
 
         if (scv.horizontal && scv.vertical)
         {
@@ -27,7 +28,7 @@ public class ContentsAutoCell : MonoBehaviour
 
             for (int i = 0; i < scv.content.childCount; i++)
             {
-                RectTransform child = scv.content.GetChild(i).GetComponent<RectTransform>();
+                scv.content.GetChild(i).TryGetComponent<RectTransform>(out RectTransform child);
                 child.localPosition = new Vector2(child.rect.width * (i % countX) + (spacing * (i + 1)), (child.rect.height * (int)(i % countX) + (spacing * ((int)(i % countX) + 1))) * -1);
             }
         }
@@ -36,7 +37,7 @@ public class ContentsAutoCell : MonoBehaviour
         {
             for (int i = 0; i < scv.content.childCount; i++)
             {
-                RectTransform child = scv.content.GetChild(i).GetComponent<RectTransform>();
+                scv.content.GetChild(i).TryGetComponent<RectTransform>(out RectTransform child);
                 child.localPosition = new Vector2((child.rect.width * i) + (spacing * (i + 1)), (scvRect.rect.height - child.rect.height) * 0.5f);
             }
         }
@@ -45,7 +46,7 @@ public class ContentsAutoCell : MonoBehaviour
         {
             for (int i = 0; i < scv.content.childCount; i++)
             {
-                RectTransform child = scv.content.GetChild(i).GetComponent<RectTransform>();
+                scv.content.GetChild(i).TryGetComponent<RectTransform>(out RectTransform child);
                 child.localPosition = new Vector2((scvRect.rect.width - child.rect.width) * 0.5f, ((child.rect.height * i) + (spacing * (i + 1))) * -1);
             }
         }

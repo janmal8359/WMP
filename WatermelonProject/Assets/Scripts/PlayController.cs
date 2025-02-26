@@ -10,6 +10,7 @@ public class PlayController : MonoBehaviour
     public float clickCooltime = 0f;
     public NativeHashMap<int, FRUIT> fruitNum = new NativeHashMap<int, FRUIT>();
 
+    //
     private GameObject fruit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,11 +33,11 @@ public class PlayController : MonoBehaviour
         {
             // 클릭 쿨타임
             if (Time.realtimeSinceStartup < manager.lastPickTime + clickCooltime) return;
-            if (fruit.GetComponent<FruitsStateManager>() == null) return;
+            if (!fruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fsm)) return;
 
             manager.lastPickTime = Time.realtimeSinceStartup;
-            
-            FruitsStateManager fruitSM = fruit.GetComponent<FruitsStateManager>();
+
+            fruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fruitSM);
             fruitSM.state = FRUITSTATE.DROP;
             fruitSM.rigid.simulated = true;
 

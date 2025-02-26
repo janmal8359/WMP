@@ -19,6 +19,7 @@ public class DataManager : MonoBehaviour
     public Transform trRank;
     public ContentsAutoCell autoCell;
 
+    //
     private string path;
 
     void Awake()

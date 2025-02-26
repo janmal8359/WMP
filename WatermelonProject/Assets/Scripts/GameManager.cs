@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     public float lastPickTime = 0f;
 
-
+    //
     private int totalScore = 0;
 
 
@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
             uiRanking.SetActive(false);
         }).AddTo(this);
 
+        //
         MessageBroker.Default.Receive<InstNewObject>().Subscribe(_ =>
         {
             GetNextFruit(_.fruit, _.pos);
@@ -115,13 +116,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject GetNextFruit(FRUIT fruitIndex, Vector2 pos)
     {
-        int fIndex = (int)fruitIndex;//.ConvertTo<Int32>();
+        int fIndex = (int)fruitIndex;
         SCORE += ++fIndex * 100;
 
         GameObject nextFruit = Instantiate(fruit, trStage);
         nextFruit.transform.position = pos;
-        nextFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)fIndex);
-        nextFruit.GetComponentInChildren<Rigidbody2D>().simulated = true;
+        nextFruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fsm);
+        fsm.Init().SetFruitInfo((FRUIT)fIndex);
+        fsm.rigid.simulated = true;
 
         return nextFruit;
     }
