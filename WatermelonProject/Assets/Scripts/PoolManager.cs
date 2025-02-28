@@ -18,4 +18,20 @@ public class PoolManager : MonoBehaviour
 
         Instance = this;
     }
+
+    public void EnqueueFruit(FruitsStateManager fsmObject)
+    {
+        if (FRUITQUEUE == null) return;
+
+        FRUITQUEUE.Enqueue(fsmObject);
+        fsmObject.transform.SetParent(this.transform);
+        fsmObject.gameObject.SetActive(false);
+    }
+
+    public FruitsStateManager DequeueFruit()
+    {
+        if (FRUITQUEUE == null) return null;
+        
+        return FRUITQUEUE.Dequeue();
+    }
 }

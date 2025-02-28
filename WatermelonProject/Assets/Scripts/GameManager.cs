@@ -108,10 +108,22 @@ public class GameManager : MonoBehaviour
 
     public GameObject GetFruit()
     {
-        GameObject newfruit = Instantiate(fruit, trStage);
-        newfruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
+        if (PoolManager.Instance != null && PoolManager.Instance.FRUITQUEUE.Count > 0)
+        {
+            FruitsStateManager newFruit = PoolManager.Instance.DequeueFruit();
+            newFruit.gameObject.SetActive(true);
+            newFruit.transform.SetParent(trStage);
+            newFruit.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
 
-        return newfruit;
+            return newFruit.gameObject;
+        }
+        else
+        {
+            GameObject newFruit = Instantiate(fruit, trStage);
+            newFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
+            
+            return newFruit;
+        }
     }
 
     public GameObject GetNextFruit(FRUIT fruitIndex, Vector2 pos)
@@ -119,13 +131,26 @@ public class GameManager : MonoBehaviour
         int fIndex = (int)fruitIndex;
         SCORE += ++fIndex * 100;
 
-        GameObject nextFruit = Instantiate(fruit, trStage);
-        nextFruit.transform.position = pos;
-        nextFruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fsm);
-        fsm.Init().SetFruitInfo((FRUIT)fIndex);
-        fsm.rigid.simulated = true;
+        if (PoolManager.Instance != null && PoolManager.Instance.FRUITQUEUE.Count > 0)
+        {
+            FruitsStateManager nextFsm = PoolManager.Instance.FRUITQUEUE.Dequeue();
+            nextFsm.gameObject.SetActive(true);
+            nextFsm.transform.position = pos;
+            nextFsm.transform.SetParent(trStage);
+            nextFsm.Init().SetFruitInfo((FRUIT)fIndex);
+            nextFsm.rigid.simulated = true;
 
-        return nextFruit;
+            return nextFsm.gameObject;
+        }
+        else
+        {
+            GameObject nextFruit = Instantiate(fruit, trStage);
+            nextFruit.transform.position = pos;
+            nextFruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fsm);
+            fsm.Init().SetFruitInfo((FRUIT)fIndex);
+            fsm.rigid.simulated = true;
+
+            return nextFruit;
+        }
     }
-
 }
