@@ -1251,6 +1251,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af856cb63e544642a57da7a959469c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fruits:
+  - {fileID: -5777258784956467597, guid: f21148200a9484f14bfeb1ec2aefbe7d, type: 3}
+  - {fileID: 8604737990743869772, guid: 4e5d0557382e247fdafbeea6125cb4b2, type: 3}
+  - {fileID: -4144078695699622923, guid: 99edbba069e0044a08c4378553106392, type: 3}
+  - {fileID: 5502474811929851794, guid: 8054fd22a5d3546ddbaf02329f9cccbb, type: 3}
+  - {fileID: 5312474247169421888, guid: 82fd5257939c54bbfb4dde4945b4dfa2, type: 3}
+  - {fileID: 5404998673763984617, guid: 24f5ad627c50b46659b422257465b90d, type: 3}
+  - {fileID: 4916462786003640062, guid: 556fcec2376a44befac7377d7c1749ca, type: 3}
   state: 0
   fruit: {fileID: 7686344322134549309, guid: 5666b13c75dc3414daeb5f2b12ae3403, type: 3}
   trFruits: {fileID: 164673620}

@@ -11,7 +11,7 @@ public class PlayController : MonoBehaviour
     public NativeHashMap<int, FRUIT> fruitNum = new NativeHashMap<int, FRUIT>();
 
     //
-    private GameObject fruit;
+    private FruitsStateManager fruit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,13 +37,13 @@ public class PlayController : MonoBehaviour
 
             manager.lastPickTime = Time.realtimeSinceStartup;
 
-            fruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fruitSM);
-            fruitSM.state = FRUITSTATE.DROP;
-            fruitSM.rigid.simulated = true;
+            //fruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fruitSM);
+            fruit.state = FRUITSTATE.DROP;
+            fruit.rigid.simulated = true;
 
             fruit = manager.GetFruit();
-            FRUIT fIndex = (FRUIT)UnityEngine.Random.Range(0, 2);
-            fruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo(fIndex);
+            //FRUIT fIndex = (FRUIT)UnityEngine.Random.Range(0, 2);
+            //fruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo(fIndex);
         }
     }
 }

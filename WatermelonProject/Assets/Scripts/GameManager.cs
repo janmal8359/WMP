@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {get; private set;}
     DataManager dataManager;
 
+    public FruitsStateManager[] fruits;
+
     public GAMESTATE state = GAMESTATE.IDLE;
     public GameObject fruit;
     public Transform trFruits;
@@ -106,51 +108,54 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public GameObject GetFruit()
+    public FruitsStateManager GetFruit()
     {
         if (PoolManager.Instance != null && PoolManager.Instance.FRUITQUEUE.Count > 0)
         {
-            FruitsStateManager newFruit = PoolManager.Instance.DequeueFruit();
-            newFruit.gameObject.SetActive(true);
-            newFruit.transform.SetParent(trStage);
-            newFruit.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
+            //FruitsStateManager newFruit = PoolManager.Instance.DequeueFruit();
+            //newFruit.gameObject.SetActive(true);
 
-            return newFruit.gameObject;
+            FruitsStateManager newFruit = Instantiate<FruitsStateManager>(fruits[UnityEngine.Random.Range(0, 2)], trStage);
+            
+            //newFruit.transform.SetParent(trStage);
+            //newFruit.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
+
+            return newFruit;
         }
         else
         {
-            GameObject newFruit = Instantiate(fruit, trStage);
-            newFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
+            FruitsStateManager newFruit = Instantiate<FruitsStateManager>(fruits[UnityEngine.Random.Range(0, 2)], trStage);
+            //newFruit.GetComponent<FruitsStateManager>()?.Init().SetFruitInfo((FRUIT)UnityEngine.Random.Range(0, 2));
             
             return newFruit;
         }
     }
 
-    public GameObject GetNextFruit(FRUIT fruitIndex, Vector2 pos)
+    public FruitsStateManager GetNextFruit(FRUIT fruitIndex, Vector2 pos)
     {
         int fIndex = (int)fruitIndex;
         SCORE += ++fIndex * 100;
 
-        if (PoolManager.Instance != null && PoolManager.Instance.FRUITQUEUE.Count > 0)
-        {
-            FruitsStateManager nextFsm = PoolManager.Instance.FRUITQUEUE.Dequeue();
-            nextFsm.gameObject.SetActive(true);
-            nextFsm.transform.position = pos;
-            nextFsm.transform.SetParent(trStage);
-            nextFsm.Init().SetFruitInfo((FRUIT)fIndex);
-            nextFsm.rigid.simulated = true;
+        //if (PoolManager.Instance != null && PoolManager.Instance.FRUITQUEUE.Count > 0)
+        //{
+        //    FruitsStateManager nextFsm = PoolManager.Instance.FRUITQUEUE.Dequeue();
+        //    nextFsm.gameObject.SetActive(true);
+        //    nextFsm.transform.position = pos;
+        //    nextFsm.transform.SetParent(trStage);
+        //    nextFsm.Init().SetFruitInfo((FRUIT)fIndex);
+        //    nextFsm.rigid.simulated = true;
 
-            return nextFsm.gameObject;
-        }
-        else
-        {
-            GameObject nextFruit = Instantiate(fruit, trStage);
+        //    return nextFsm.gameObject;
+        //}
+        //else
+        //{
+            FruitsStateManager nextFruit = Instantiate<FruitsStateManager>(fruits[fIndex], trStage);
             nextFruit.transform.position = pos;
-            nextFruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fsm);
-            fsm.Init().SetFruitInfo((FRUIT)fIndex);
-            fsm.rigid.simulated = true;
+            //nextFruit.TryGetComponent<FruitsStateManager>(out FruitsStateManager fsm);
+            //fsm.Init().SetFruitInfo((FRUIT)fIndex);
+            nextFruit.rigid.simulated = true;
 
             return nextFruit;
-        }
+        //}
     }
 }

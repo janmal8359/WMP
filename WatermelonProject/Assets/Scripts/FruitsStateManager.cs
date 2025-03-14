@@ -35,6 +35,8 @@ public class FruitsStateManager : MonoBehaviour
     {
         gManager = GameManager.Instance;
         if (gManager == null) return;
+
+        if (rigid == null) return;
     }
 
     public FruitsStateManager Init()
@@ -60,7 +62,7 @@ public class FruitsStateManager : MonoBehaviour
             else fruits[i].SetActive(false);
         }
         
-        rigid = GetComponentInChildren<Rigidbody2D>();
+        //rigid = GetComponentInChildren<Rigidbody2D>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -81,13 +83,13 @@ public class FruitsStateManager : MonoBehaviour
             Debug.Log("is Pass");
             Vector2 nextFruitPos = new Vector2((col.transform.position.x + this.transform.position.x) / 2, (col.transform.position.y + this.transform.position.y) / 2);
 
-            //col.gameObject.SetActive(false);
-            //this.gameObject.SetActive(false);
+            col.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
 
-            Debug.Log("Enqueue");
+            //Debug.Log("Enqueue");
             // Enqueue
-            PoolManager.Instance.EnqueueFruit(this);
-            PoolManager.Instance.EnqueueFruit(col);
+            //PoolManager.Instance.EnqueueFruit(this);
+            //PoolManager.Instance.EnqueueFruit(col);
 
             MessageBroker.Default.Publish<InstNewObject>(new InstNewObject(this.fruit, nextFruitPos));
             // == gManager.GetNextFruit(this.fruit, nextFruitPos);
